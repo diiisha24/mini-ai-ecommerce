@@ -9,7 +9,7 @@ Full flow: **UI → API → Database → Authentication → Business Logic → A
 - **Live app:** https://mini-ai-ecommerce.vercel.app
 - **Live API:** https://mini-ai-ecommerce-backend.onrender.com (interactive docs at `/docs`)
 - **Repository:** https://github.com/diiisha24/mini-ai-ecommerce
-- [System design (one-pager)](docs/system-design.md)
+- [System design (one-pager PDF)](docs/system-design-onepager.pdf) / [full write-up](docs/system-design.md)
 - [Database schema](docs/db-schema.md)
 - [API reference](docs/api.md)
 
