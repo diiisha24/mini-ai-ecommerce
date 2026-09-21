@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     stripe_currency: str = "usd"
 
     google_api_key: str = ""
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.6-flash"
 
     frontend_url: str = "http://localhost:5173"
 
