@@ -6,9 +6,16 @@ AI support agent that answers questions using real product/order data — built 
 
 Full flow: **UI → API → Database → Authentication → Business Logic → AI → Integration**
 
+- **Live app:** https://mini-ai-ecommerce.vercel.app
+- **Live API:** https://mini-ai-ecommerce-backend.onrender.com (interactive docs at `/docs`)
+- **Repository:** https://github.com/diiisha24/mini-ai-ecommerce
 - [System design (one-pager)](docs/system-design.md)
 - [Database schema](docs/db-schema.md)
 - [API reference](docs/api.md)
+
+> **Note on the free-tier backend:** Render's free plan spins the service down after
+> inactivity — the first request after idle can take ~30-60s to wake it up. Give it a
+> moment if the first page load looks stuck on "Loading...".
 
 ## Tech stack
 
@@ -180,4 +187,4 @@ The chat endpoint (`POST /api/ai/chat`) calls Gemini directly — no extra setup
 
 ## Total development time
 
-`[Fill in: total hours spent, per assignment instructions]`
+~5 hours
