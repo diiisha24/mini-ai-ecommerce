@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { GoogleLoginButton } from "@/components/GoogleLoginButton";
+import { AuthScreen } from "@/components/AuthScreen";
 
 export function ProtectedRoute({ children, adminOnly = false }: { children: ReactNode; adminOnly?: boolean }) {
   const { user, loading } = useAuth();
@@ -10,12 +10,7 @@ export function ProtectedRoute({ children, adminOnly = false }: { children: Reac
   }
 
   if (!user) {
-    return (
-      <div className="flex flex-col items-center gap-4 py-20">
-        <p className="text-muted-foreground">Sign in to continue.</p>
-        <GoogleLoginButton />
-      </div>
-    );
+    return <AuthScreen message="Sign in to continue." />;
   }
 
   if (adminOnly && user.role !== "admin") {

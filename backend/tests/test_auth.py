@@ -26,6 +26,23 @@ def test_new_user_registers_as_customer_by_default(client, monkeypatch):
     assert body["user"]["email"] == "newcustomer@example.com"
     assert body["user"]["role"] == "customer"
     assert body["access_token"]
+    assert body["is_new_user"] is True
+
+
+def test_returning_user_login_reports_not_new(client, monkeypatch):
+    monkeypatch.setattr("app.routers.auth.settings.google_client_id", "dummy-client-id")
+    monkeypatch.setattr(
+        "app.routers.auth.google_id_token.verify_oauth2_token",
+        lambda token, request, client_id: _fake_claims("sub-returning", "returning@example.com"),
+    )
+
+    first = client.post("/api/auth/google", json={"id_token": "whatever"})
+    second = client.post("/api/auth/google", json={"id_token": "whatever"})
+
+    assert first.json()["is_new_user"] is True
+    assert second.json()["is_new_user"] is False
+    # Same account both times, not a duplicate registration.
+    assert first.json()["user"]["id"] == second.json()["user"]["id"]
 
 
 def test_admin_allowlist_grants_admin_on_registration(client, monkeypatch):

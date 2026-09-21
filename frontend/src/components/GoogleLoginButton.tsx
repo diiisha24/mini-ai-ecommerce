@@ -9,9 +9,15 @@ export function GoogleLoginButton() {
     <GoogleLogin
       onSuccess={(credentialResponse) => {
         if (!credentialResponse.credential) return;
-        loginWithGoogle(credentialResponse.credential).catch(() => {
-          toast.error("Sign-in failed. Please try again.");
-        });
+        loginWithGoogle(credentialResponse.credential)
+          .then(({ isNewUser }) => {
+            toast.success(
+              isNewUser ? "Account created - welcome to Mini AI Store!" : "Welcome back!"
+            );
+          })
+          .catch(() => {
+            toast.error("Sign-in failed. Please try again.");
+          });
       }}
       onError={() => toast.error("Google sign-in was cancelled or failed.")}
     />

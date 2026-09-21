@@ -32,6 +32,7 @@ def google_login(payload: GoogleLoginRequest, session: Session = Depends(get_ses
     picture = claims.get("picture")
 
     user = session.exec(select(User).where(User.google_sub == google_sub)).first()
+    is_new_user = user is None
     if user is None:
         # New user registration. Grant admin role only if the email is on the allow-list.
         role = Role.admin if email in settings.admin_email_set else Role.customer
@@ -53,7 +54,7 @@ def google_login(payload: GoogleLoginRequest, session: Session = Depends(get_ses
         session.refresh(user)
 
     token = create_access_token(user_id=user.id, role=user.role.value)
-    return TokenResponse(access_token=token, user=UserRead.model_validate(user))
+    return TokenResponse(access_token=token, user=UserRead.model_validate(user), is_new_user=is_new_user)
 
 
 @router.get("/me", response_model=UserRead)

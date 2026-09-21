@@ -5,7 +5,10 @@ import type { User } from "@/lib/types";
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
-  loginWithGoogle: (idToken: string) => Promise<void>;
+  /** Returns whether this call registered a brand-new account (vs. logging an
+   * existing one in) - the same Google Sign-In flow handles both, this is what makes
+   * the two outcomes observable rather than just implicit. */
+  loginWithGoogle: (idToken: string) => Promise<{ isNewUser: boolean }>;
   logout: () => void;
 }
 
@@ -32,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const res = await api.post("/api/auth/google", { id_token: idToken });
     setToken(res.data.access_token);
     setUser(res.data.user);
+    return { isNewUser: Boolean(res.data.is_new_user) };
   }
 
   function logout() {

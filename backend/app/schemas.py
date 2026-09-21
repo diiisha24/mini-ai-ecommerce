@@ -25,6 +25,10 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserRead
+    # True only on the request that actually created the account, so the frontend can
+    # show new-user-registration vs existing-user-login as distinct, observable outcomes
+    # of the same Google Sign-In flow.
+    is_new_user: bool
 
 
 # ---- Products ----
